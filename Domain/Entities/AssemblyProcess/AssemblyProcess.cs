@@ -9,7 +9,7 @@ namespace DomainDDD.Entities.AssemblyProcess
 {
     public class AssemblyProcess
     {
-        public AssemblyProcessId Id { get; private set; }
+        public Guid Id { get; private set; }
         public List<Item.Item> items { get; private set; }
         public int MaxOrderNumber { get; private set; }
 

@@ -8,11 +8,11 @@ namespace DomainDDD.Entities.Station
 {
     public class Station
     {
-        public StationId Id { get; private set; }
+        public Guid Id { get; private set; }
         public string Name { get; private set; } = string.Empty;
-        public LineId LineId { get; private set; }
-        public DetectorId DetectorId { get; private set; }
-        public SubProductId SubProductId { get; private set; }
-        public BufferId BufferId { get; private set; }
+        public Guid LineId { get; private set; }
+        public Guid DetectorId { get; private set; }
+        public Guid SubProductId { get; private set; }
+        public Guid BufferId { get; private set; }
     }
 }

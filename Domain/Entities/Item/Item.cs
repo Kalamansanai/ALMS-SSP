@@ -8,7 +8,7 @@ namespace DomainDDD.Entities.Item
 {
     public class Item
     {
-        public ItemId Id { get; private set; }
+        public Guid Id { get; private set; }
         public int OrderId { get; private set; }
         public ItemState State { get; private set; }
     }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -8,14 +8,37 @@
     <UserSecretsId>2b4d6c99-e783-40ee-a367-dcd95301a901</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
+	  <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	  <SuppressTargetFrameworkAttribute>true</SuppressTargetFrameworkAttribute>
+		  <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+		  <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+		  <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+		  <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
   </PropertyGroup>
 
   <ItemGroup>
+	  <PackageReference Include="Ardalis.Specification" Version="8.0.0" />
+	  <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="FluentResults" Version="3.16.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+	  <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
+	  <PackageReference Include="Serilog" Version="4.2.0" />
+	  <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+	  <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+	  <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
+	  <!-- DO NOT REMOVE UNDER ANY CIRCUMSTANCE
+	  valamiért az AssemblyAttributes és AssemblyInfo fájlok - amiket fordításkor hoz létre -
+	  errort dobnak duplikált attribútum miatt
+	  
+	  ettől azokat nem fordíja le
+	  -->
+	<Compile Remove=".\**\*.AssemblyAttributes.cs" />
+	<Compile Remove=".\**\*.AssemblyInfo.cs" />
   </ItemGroup>
 
+	
 </Project>

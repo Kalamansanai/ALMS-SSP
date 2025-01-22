@@ -8,9 +8,9 @@ namespace DomainDDD.Entities.OPU
 {
     public class OPU
     {
-        public OPUId Id { get; private set; }
+        public Guid Id { get; private set; }
         public string Name { get; private set; } = string.Empty;
-        public SiteId SiteId { get; private set; }
-        public LineId LineId { get; private set; }
+        public Guid SiteId { get; private set; }
+        public Guid LineId { get; private set; }
     }
 }

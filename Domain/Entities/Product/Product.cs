@@ -10,7 +10,7 @@ namespace DomainDDD.Entities.Product
 {
     public class Product
     {
-        public ProductId Id { get; private set; }
+        public Guid Id { get; private set; }
         public string Name { get; private set; } = string.Empty;
         public List<SubProduct.SubProduct> subProducts { get; private set; }
         public ProductState state { get; private set; }

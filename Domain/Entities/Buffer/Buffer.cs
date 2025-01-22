@@ -8,7 +8,7 @@ namespace DomainDDD.Entities.Buffer
 {
     public class Buffer
     {
-        public BufferId Id { get; private set; }
+        public Guid Id { get; private set; }
         public static int Capacity { get; private set; }
         public int InBufferCount { get; private set; }
     }

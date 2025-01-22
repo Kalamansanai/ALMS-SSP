@@ -1,9 +1,20 @@
+using Infrastructure.Database;
+using Infrastructure.Logging;
+using Microsoft.AspNetCore.Builder;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Host.InitLogger(true);
+
+var dbres = builder.AddDatabase(builder.Configuration);
+if (dbres.IsFailed) {
+    Console.WriteLine($"{dbres.Errors}");
+    throw new Exception("CRITICAL ERROR! Could not add Database to builder!");
+}
 
 var app = builder.Build();
 
@@ -35,6 +46,15 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast")
 .WithOpenApi();
+
+dbres = app.InitializeDatabase();
+if (dbres.IsFailed) {
+    app.GetLogger().Error($"DB initilization failed:");
+    dbres.Errors.ForEach(err => app.GetLogger().Error($"- {err.Message}"));
+    throw new Exception("CRITICAL ERROR: DB Initialization failed!");
+}
+
+app.GetLogger().Information("Text");
 
 app.Run();
 
