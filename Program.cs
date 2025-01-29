@@ -10,7 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Host.InitLogger(true);
 
-var dbres = builder.AddDatabase(builder.Configuration);
+var dbres = builder.AddDatabase();
 if (dbres.IsFailed) {
     Console.WriteLine($"{dbres.Errors}");
     throw new Exception("CRITICAL ERROR! Could not add Database to builder!");
@@ -53,8 +53,6 @@ if (dbres.IsFailed) {
     dbres.Errors.ForEach(err => app.GetLogger().Error($"- {err.Message}"));
     throw new Exception("CRITICAL ERROR: DB Initialization failed!");
 }
-
-app.GetLogger().Information("Text");
 
 app.Run();
 

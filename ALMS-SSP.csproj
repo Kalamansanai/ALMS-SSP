@@ -31,10 +31,11 @@
 	  <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
 	  <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
 	  <!-- DO NOT REMOVE UNDER ANY CIRCUMSTANCE
-	  valamiért az AssemblyAttributes és AssemblyInfo fájlok - amiket fordításkor hoz létre -
-	  errort dobnak duplikált attribútum miatt
+	  for some reason the AssemblyAttributes and AssemblyInfo files - which are created at compile time -
+	  throw an error due to duplicate attributes
 	  
-	  ettől azokat nem fordíja le
+	  these cursed lines of code remove them from the compilation process
+	  if removed, errors will be thrown during compilation
 	  -->
 	<Compile Remove=".\**\*.AssemblyAttributes.cs" />
 	<Compile Remove=".\**\*.AssemblyInfo.cs" />

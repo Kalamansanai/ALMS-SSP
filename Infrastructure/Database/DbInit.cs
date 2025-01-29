@@ -18,15 +18,16 @@ namespace Infrastructure.Database {
         /// To actually initialize the database, use DbInit.InitializeDatabase on the built application
         /// </summary>
         /// <param name="app">The WebApplicationBuilder to modify</param>
-        /// <param name="config">The configuration to load the connection string from (usually app.Configuration)</param>
         /// <returns>Result.Ok containing this on success, Result.Fail on failure</returns>
         /// <remarks>To see how the DB connection string is created/handled, see DbInit.GetConnectionString</remarks>
-        public static Result AddDatabase(this WebApplicationBuilder app, IConfiguration config) {
+        public static Result AddDatabase(this WebApplicationBuilder app) {
             // Loading the database connection string
             // it's done through an internal method to avoid code duplication and allow for lazy loading
+            var config = app.Configuration!;
+            app.Services.AddSingleton(config);
             Result<String> conStringRes = GetConnectionString(config, true);
             if (conStringRes.IsFailed) return conStringRes.ToResult();
-
+            
             return Result.Try(() => {
                 String connectionString = conStringRes.Value;
 
@@ -58,6 +59,7 @@ namespace Infrastructure.Database {
             var scope = app.ApplicationServices.CreateScope();
             var services = scope.ServiceProvider;
             var context = services.GetRequiredService<ALMSDbContext>();
+            var configs = services.GetRequiredService<IConfiguration>();
             var db = context.Database;
             var logger = app.GetLogger();
 
@@ -66,6 +68,14 @@ namespace Infrastructure.Database {
                     logger.Error("Could not get ALMSDbContext from services, DB initialisation unsuccessful");
                     throw new Exception("Critical error encountered during DB initialisation");
                 }
+
+                if (configs["DeleteDB"] == "true") {
+                    logger.Warning("DeleteDB flag set to true, deleting and recreating database");
+                    logger.Warning("If this appears in prod, you messed up");
+                    db.EnsureDeleted();
+                    db.EnsureCreated();
+                }
+
                 if (!db.CanConnect()) {
                     logger.Information("Could not connect to database, attempting to create it");
                     if (db.EnsureCreated())
