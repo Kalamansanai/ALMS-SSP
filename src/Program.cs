@@ -12,7 +12,9 @@ builder.Host.InitLogger(true);
 
 var dbres = builder.AddDatabase();
 if (dbres.IsFailed) {
-    Console.WriteLine($"{dbres.Errors}");
+    Console.WriteLine("CRITICAL ERROR! Could not add Database to builder!\n" +
+        "The following errors were encountered:");
+    dbres.Errors.ForEach(err => Console.WriteLine($"- {err.Message}"));
     throw new Exception("CRITICAL ERROR! Could not add Database to builder!");
 }
 

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Logging {
     public static class ALMSLogging {
-        private static string _LogPath = "logs/alms-logs.log";
+        private static string _LogPath = "../logs/alms-logs.log";
         // allows for caching of the logger, so we don't have to use GetRequiredService every time
         private static Tuple<int, Serilog.ILogger?> _LoggerCache = new(0, null);
 
