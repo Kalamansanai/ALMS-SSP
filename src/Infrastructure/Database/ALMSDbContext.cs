@@ -13,7 +13,7 @@ using Buffer = DomainDDD.Entities.Buffer.Buffer;
 
 namespace Infrastructure.Database {
     public class ALMSDbContext : DbContext {
-        public ALMSDbContext(DbContextOptions<ALMSDbContext> options) : base(options) { }
+        public ALMSDbContext(DbContextOptions<ALMSDbContext> options) : base(options) {}
 
         // ALMS DB elements
         // TODO: figure out what data model we are actually using

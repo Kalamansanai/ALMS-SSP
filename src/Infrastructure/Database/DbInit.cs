@@ -1,10 +1,8 @@
-﻿using System;
-using FluentResults;
+﻿using FluentResults;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Serilog;
 using System.Diagnostics.CodeAnalysis;
 using Infrastructure.Logging;
 
