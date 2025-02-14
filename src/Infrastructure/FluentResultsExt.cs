@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,5 +44,18 @@ public static class FluentResultsExt {
             }
         }
         return result;
+    }
+
+    public static Result OnError(this Result result, Action<IError> action) {
+        if (result.IsFailed) {
+            foreach (var error in result.Errors) {
+                action(error);
+            }
+        }
+        return result;
+    }
+
+    public static void LogAllErrors(this Result result, Serilog.ILogger logger) {
+        result.Errors.ForEach(error => logger.Error($"- {error}\n"));
     }
 }
