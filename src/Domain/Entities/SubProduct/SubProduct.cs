@@ -8,7 +8,7 @@ namespace DomainDDD.Entities.SubProduct
 {
     public class SubProduct
     {
-        public Guid SubProductId { get; private set; }
+        public Guid SubProductId { get; private set; } = Guid.NewGuid();
         public Guid AssemblyProcessId { get; private set; }
         public SubProductState State { get; private set; }
     }

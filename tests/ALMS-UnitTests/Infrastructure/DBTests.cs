@@ -5,6 +5,8 @@ using ALMS_UnitTests;
 using Microsoft.Extensions.Configuration;
 using Infrastructure.Logging;
 using Microsoft.Extensions.DependencyInjection;
+using DomainDDD.Entities.SubProduct;
+using DomainDDD.Entities.Product;
 
 namespace ALMS_UnitTests;
 
@@ -58,5 +60,40 @@ public class DBTests {
         FluentAssert.IsSuccess(builder.AddDatabase());
         var app = builder.Build();
         FluentAssert.IsSuccess(app.InitializeDatabase());
+    }
+
+    [Fact]
+    public static void TestDBPushData() {
+        var builder = WebApplication.CreateBuilder();
+        builder.Configuration.AddJsonFile(appsettingsPath);
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+        builder.Host.InitLogger(true);
+
+        FluentAssert.IsSuccess(builder.AddDatabase());
+
+        var app = builder.Build();
+        FluentAssert.IsSuccess(app.InitializeDatabase());
+
+        // Getting a hold of the db
+        var ctx = app.Services.GetRequiredService<ALMSDbContext>();
+        Assert.NotNull(ctx);
+
+        // Testing if/how id-s and lists of ids get stored
+        var sproducts = Enumerable.Range(1, 9)
+            .Select(val => new SubProduct())
+            .OrderBy(sprod => sprod.SubProductId)
+            .ToList();
+
+        ctx.SubProducts.AddRange(sproducts);
+
+        var prod = new Product(sproducts.Select(sprod => sprod.SubProductId).ToList());
+
+        ctx.Products.Add(prod);
+
+        ctx.SaveChanges();
+
+        Assert.Equal(ctx.Products.First(), prod);
+        Assert.Equal(ctx.SubProducts.ToList(), sproducts.ToList());
     }
 }

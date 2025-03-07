@@ -12,7 +12,12 @@ namespace DomainDDD.Entities.Product
     {
         public Guid Id { get; private set; }
         public string Name { get; private set; } = string.Empty;
-        public List<SubProduct.SubProduct> subProducts { get; private set; }
+        public List<Guid> subProducts { get; private set; } = new List<Guid>();
         public ProductState state { get; private set; }
+
+        public Product(List<Guid> ids) {
+            subProducts = ids;
+        }
+        public Product() { }
     }
 }

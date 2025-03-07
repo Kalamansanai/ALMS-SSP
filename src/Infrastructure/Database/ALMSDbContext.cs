@@ -17,10 +17,10 @@ namespace Infrastructure.Database {
 
         // ALMS DB elements
         // TODO: figure out what data model we are actually using
-        DbSet<Item> Items => Set<Item>();
-        DbSet<AssemblyProcess> AssemblyProcesses => Set<AssemblyProcess>();
-        DbSet<SubProduct> SubProducts => Set<SubProduct>();
-        DbSet<Product> Products => Set<Product>();
+        public DbSet<Item> Items => Set<Item>();
+        public DbSet<AssemblyProcess> AssemblyProcesses => Set<AssemblyProcess>();
+        public DbSet<SubProduct> SubProducts => Set<SubProduct>();
+        public DbSet<Product> Products => Set<Product>();
         DbSet<Line> Lines => Set<Line>();
         DbSet<OPU> OPUs => Set<OPU>();
         DbSet<Station> Stations => Set<Station>();
@@ -34,10 +34,6 @@ namespace Infrastructure.Database {
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.Entity<AssemblyProcess>()
                 .HasMany(proc => proc.items)
-                .WithOne();
-
-            modelBuilder.Entity<Product>()
-                .HasMany(prod => prod.subProducts)
                 .WithOne();
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ALMSDbContext).Assembly);
